@@ -5,7 +5,7 @@ const postController = require('../controller/post.controller')
 const multer = require('multer')
 const diskStorage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'uploads');
+        cb(null, '');
     },
     filename: function (req, file, cb) {
         const ext = file.mimetype.split('/')[1];

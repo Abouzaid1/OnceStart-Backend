@@ -13,7 +13,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors())
 dbConnection()
-
+app.get('/api/test', (req, res) => {
+    res.status(200).json({ message: "API is working" });
+});
 //routes
 const userRouter = require('./routes/user.route')
 const taskRouter = require('./routes/task.route')

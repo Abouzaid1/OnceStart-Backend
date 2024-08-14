@@ -2,6 +2,7 @@ var bcrypt = require('bcryptjs');
 const User = require('../model/user.model');
 const jwt = require('jsonwebtoken');
 const JWT_SECRET = 'jwt_secret_key';
+const handleFileUpload = require('../config/file_upload');
 //Login
 const login = async (req, res) => {
     const userData = req.body;
@@ -62,6 +63,7 @@ const signUp = async (req, res) => {
                 }
 
                 const hashedPassword = hash;
+                await handleFileUpload(req.file);
                 const newUser = new User({ ...userData, password: hashedPassword, photo: req.file ? req.file.filename : null });
 
                 try {

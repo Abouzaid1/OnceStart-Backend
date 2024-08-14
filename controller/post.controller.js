@@ -1,6 +1,6 @@
 const Post = require("../model/post.model");
 const User = require("../model/user.model");
-
+const handleFileUpload = require('../config/file_upload');
 const getAllPosts = async (req, res) => {
     console.log("hehe");
 
@@ -61,8 +61,11 @@ const addPost = async (req, res) => {
         if (!content) return res.status(400).json({ message: "Content is required" })
         if (!files) return res.status(400).json({ message: "Please upload a file" })
         let filenames = []
-        files.forEach(file => {
+        files.forEach((file) => {
             filenames.push(file.filename)
+        });
+        files.forEach(async (file) => {
+            await handleFileUpload(file)
         });
         const newPost = new Post({ content, photo: filenames, author: userId })
         await newPost.save()
