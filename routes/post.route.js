@@ -16,6 +16,6 @@ const diskStorage = multer.diskStorage({
 const upload = multer({ storage: diskStorage })
 router.route('/').get(authenticateTokenCheck, postController.getAllPosts).post(authenticateTokenCheck, upload.array('photos'), postController.addPost)
 
-router.route('/:id').get(authenticateTokenCheck, postController.getMyPosts)
+router.route('/:id').get(authenticateTokenCheck, postController.likePost)
 
 module.exports = router;

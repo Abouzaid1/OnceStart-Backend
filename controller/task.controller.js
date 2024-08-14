@@ -41,11 +41,8 @@ const updateTask = async (req, res) => {
             console.log("Task not found");
             return res.status(404).json({ message: "Task not found" })
         }
-
         const body = req.body
-        const updatedTask = await Task.findByIdAndUpdate(taskId, { ...body }).populate({ path: "userCreated", select: "username email photo" })
-        console.log(updatedTask);
-
+        const updatedTask = await Task.findByIdAndUpdate(taskId, { ...body }, { new: true }).populate({ path: "userCreated", select: "username email photo" })
         return res.status(200).json({ message: "Task updated successfully", updatedTask })
     } catch (err) {
         console.log("Task nsdfsdasdasdfot found");
@@ -58,9 +55,7 @@ const deleteTask = async (req, res) => {
     const userId = req.user.id
     try {
         const existingTask = await Task.findById(taskId)
-        if (existingTask.userCreated._id != userId) {
-            return res.status(403).json({ message: "You are not authorized to delete this task" })
-        }
+
         if (existingTask.projectIn != null) {
             const project = await Project.findOne({ _id: existingTask.projectIn, $or: [{ members: userId }, { leader: userId }] })
             console.log(project);
