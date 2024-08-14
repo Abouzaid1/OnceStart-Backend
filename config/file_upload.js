@@ -11,7 +11,7 @@ const handleFileUpload = async (file) => {
         //stream
         //headers
         `https://storage.bunnycdn.com/oncestart/${uniqueFilename}`,
-        fileStream,
+        file.buffer,
         {
             headers: {
                 AccessKey: "85ef72b7-f1ed-4057-a2dfc4257db6-2c59-40cf",
