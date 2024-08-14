@@ -1,16 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer')
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, '');
-    },
-    filename: function (req, file, cb) {
-        const ext = file.mimetype.split('/')[1];
-        const fileName = `user-${Date.now()}.${ext}`;
-        cb(null, fileName);
-    }
-})
+const storage = multer.memoryStorage()
 const upload = multer({ storage: storage, limits: { fieldSize: 25 * 1024 * 1024 } })
 const userController = require('../controller/user.controller')
 
